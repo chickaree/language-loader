@@ -1,0 +1,13 @@
+{
+    "parser": "@babel/eslint-parser",
+    "extends": [
+        "airbnb",
+        "airbnb/hooks"
+    ],
+    "env": {
+      "browser": true
+    },
+    "rules": {
+        "react/jsx-filename-extension": "off"
+    }
+}
