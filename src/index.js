@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useReducer } from 'react';
+import {
+  useEffect, useMemo, useReducer, useRef
+} from 'react';
 import Banana from 'banana-i18n';
 
 const LANGUAGES_SET = 'LANGUAGES_SET';
 const MESSAGES_ADD = 'MESSAGES_ADD';
-
-const initialState = {
-  languages: [],
-  messages: {},
-};
 
 function reducer(state, action) {
   switch (action.type) {
@@ -58,8 +55,14 @@ function getLanguageList(languages) {
   return [...languageSet];
 }
 
-function useLanguageLoader(loader) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+function useLanguageLoader(loader, initialLanguages = [], initialMessages = {}) {
+  // Ignore changes to the initialLanguages param.
+  const initLangsRef = useRef(initialLanguages);
+
+  const [state, dispatch] = useReducer(reducer, {
+    languages: initialLanguages,
+    messages: initialMessages,
+  });
 
   useEffect(() => {
     dispatch({
@@ -82,9 +85,13 @@ function useLanguageLoader(loader) {
   }, []);
 
   const languages = useMemo(() => (
-    getLanguageList(state.languages)
+    [...(new Set([
+      ...getLanguageList(state.languages),
+      ...getLanguageList(initLangsRef.current),
+    ]))]
   ), [
     state.languages,
+    initLangsRef,
   ]);
 
   useEffect(() => {
@@ -133,4 +140,4 @@ function useLanguageLoader(loader) {
   ];
 }
 
-export { useLanguageLoader, getLanguageList };
+export default useLanguageLoader;

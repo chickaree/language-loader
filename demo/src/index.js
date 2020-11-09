@@ -2,7 +2,7 @@ import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { render } from 'react-dom';
 import Banana from 'banana-i18n';
-import { useLanguageLoader } from '../../src';
+import useLanguageLoader from '../../src';
 
 async function languageLoader(lang) {
   const { default: messages } = await import(`../i18n/${lang}.json`);
@@ -10,9 +10,11 @@ async function languageLoader(lang) {
 }
 
 function Demo() {
-  const [locale, messages, languages] = useLanguageLoader(languageLoader);
-
-  console.log('LOCALE', locale);
+  const [locale, messages, languages] = useLanguageLoader(languageLoader, ['fr'], {
+    fr: {
+      hello: 'Bonjour!',
+    },
+  });
 
   const banana = new Banana(locale, {
     messages,
