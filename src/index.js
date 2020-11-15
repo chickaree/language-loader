@@ -1,5 +1,5 @@
 import {
-  useEffect, useMemo, useReducer, useRef
+  useEffect, useMemo, useReducer, useRef,
 } from 'react';
 import Banana from 'banana-i18n';
 
