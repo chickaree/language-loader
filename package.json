@@ -1,6 +1,5 @@
 {
   "name": "@chickaree/language-loader",
-  "version": "1.0.0",
   "description": "useLanguageLoader React hook",
   "main": "lib/index.js",
   "module": "es/index.js",
