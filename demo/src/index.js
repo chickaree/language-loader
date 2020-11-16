@@ -1,6 +1,6 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import Banana from 'banana-i18n';
 import useLanguageLoader from '../../src';
 
@@ -42,4 +42,4 @@ function Demo() {
 }
 
 // eslint-disable-next-line no-undef
-render(<Demo />, document.getElementById('demo'));
+ReactDOM.render(<Demo />, document.getElementById('demo'));
