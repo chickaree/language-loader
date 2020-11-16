@@ -40,5 +40,6 @@
   "license": "LGPL-3.0-or-later",
   "keywords": [
     "react-hook"
-  ]
+  ],
+  "version": "1.0.0"
 }
