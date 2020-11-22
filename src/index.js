@@ -29,32 +29,25 @@ function reducer(state, action) {
 }
 
 function getLanguageList(languages) {
-  const provided = new Set(languages.map((locale) => locale.toLowerCase()));
-
-  console.log('provided', [...provided.values()]);
+  const languageSet = new Set(languages.map((locale) => locale.toLowerCase()));
 
   // Change `en-US` to `en` and add it to the end of the list.
-  const userLanguages = [...provided.values()].reduce((set, locale) => {
+  languageSet.forEach((locale) => {
     if (locale.includes('-')) {
       const [lang] = locale.split('-');
-      set.add(lang);
+      languageSet.add(lang);
     }
+  });
 
-    return set;
-  }, provided);
-
-  // Add the fallbacks specificed in banana-i18n.
-  const languageSet = [...userLanguages.values()].reduce((set, locale) => {
+  languageSet.forEach((locale) => {
     const banana = new Banana(locale);
 
     banana.getFallbackLocales().forEach((fallback) => {
-      set.add(fallback);
+      languageSet.add(fallback);
     });
+  });
 
-    return set;
-  }, userLanguages);
-
-  return [...languageSet.values()];
+  return Array.from(languageSet);
 }
 
 function useLanguageLoader(loader, initialLanguages = [], initialMessages = {}) {
@@ -87,10 +80,10 @@ function useLanguageLoader(loader, initialLanguages = [], initialMessages = {}) 
   }, []);
 
   const languages = useMemo(() => (
-    [...(new Set([
+    Array.from(new Set([
       ...getLanguageList(state.languages),
       ...getLanguageList(initLangsRef.current),
-    ]))]
+    ]))
   ), [
     state.languages,
     initLangsRef,
