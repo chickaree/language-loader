@@ -31,6 +31,8 @@ function reducer(state, action) {
 function getLanguageList(languages) {
   const provided = new Set(languages.map((locale) => locale.toLowerCase()));
 
+  console.log('provided', [...provided.values()]);
+
   // Change `en-US` to `en` and add it to the end of the list.
   const userLanguages = [...provided.values()].reduce((set, locale) => {
     if (locale.includes('-')) {
