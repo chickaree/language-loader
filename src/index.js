@@ -32,8 +32,8 @@ function getLanguageList(languages) {
   const provided = new Set(languages.map((locale) => locale.toLowerCase()));
 
   // Change `en-US` to `en` and add it to the end of the list.
-  const userLanguages = [...provided].reduce((set, locale) => {
-    if (locale.indexOf('-') !== -1) {
+  const userLanguages = [...provided.values()].reduce((set, locale) => {
+    if (locale.includes('-')) {
       const [lang] = locale.split('-');
       set.add(lang);
     }
@@ -42,7 +42,7 @@ function getLanguageList(languages) {
   }, provided);
 
   // Add the fallbacks specificed in banana-i18n.
-  const languageSet = [...userLanguages].reduce((set, locale) => {
+  const languageSet = [...userLanguages.values()].reduce((set, locale) => {
     const banana = new Banana(locale);
 
     banana.getFallbackLocales().forEach((fallback) => {
@@ -52,7 +52,7 @@ function getLanguageList(languages) {
     return set;
   }, userLanguages);
 
-  return [...languageSet];
+  return [...languageSet.values()];
 }
 
 function useLanguageLoader(loader, initialLanguages = [], initialMessages = {}) {
