@@ -33,7 +33,7 @@ function getLanguageList(languages) {
 
   // Change `en-US` to `en` and add it to the end of the list.
   const userLanguages = [...provided].reduce((set, locale) => {
-    if (locale.includes('-')) {
+    if (locale.indexOf('-') !== -1) {
       const [lang] = locale.split('-');
       set.add(lang);
     }
